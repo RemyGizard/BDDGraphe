@@ -76,10 +76,30 @@ let check_expr e et env : tc_result =
   | FieldAccError s -> Result.Error [s]
   
 
+
+(* Instructions *)
+let verif_label lb env =
+  match env.types with
+  | DBG (ntdecls, _) -> List.mem lb (List.map (fun (DBN(n, _)) -> n) ntdecls)
+  | _ -> false  (* Si jamais `env.types` n'est pas valide *)
+
+let verif_declared_var vn env =
+  List.exists (fun (v, _) -> v = vn) env.bindings ;;
+
+let add_var_to_env vn lb env =
+  { env with bindings = (vn, lb) :: env.bindings } ;;
+
 let tc_instr (i: instruction) (env: environment) : tc_result = 
   match i with
-  | IActOnNode (_act, vn, lb) -> Result.Error ["not yet implemented"]
-  | _  -> Result.Error ["also not implemented"]
+  | IActOnNode (CreateAct, vn, lb) -> 
+      if not (verif_label lb env) 
+      then Result.Error ["label non déclaré"]
+      else if verif_declared_var vn env 
+      then Result.Error ["var déjà déclarée"]
+      else Result.Ok (add_var_to_env vn lb env)
+  | _  -> Result.Error ["instruction non implémentée"] ;;
+
+        
 
 (* type check list of instructions and stop on error *)
 let check_and_stop (res : tc_result) i : tc_result = Result.bind res (tc_instr i)
@@ -121,7 +141,10 @@ let typecheck continue (NormProg(gt, NormQuery instrs) as np) =
       ]
     );;
   check_graph_types test_duplicate_relations;;
+
+
+
   
 
   
-  
+
