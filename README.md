@@ -1,19 +1,21 @@
 # BDDGraphe
-## Commande a taper pour lancer le projet 
-  # bibliothèques a installer
+# Commande a taper pour lancer le projet 
+  ## première commande
+        opam init
+  ## bibliothèques a installer
         opam install ppx_deriving
+        opam switch create 4.12.0
         opam install ocmalgraph
         opam install menhir
         opam install uTop
-  # Commande a taper
-        opam init
+  ## Commande a taper
         eval $(opam env)
         opam install dune
         dune exec Proj_GraphDB f test/tiny.q
         dune build 
         dune utop
 
-## Commande a taper  lorsque le projet est lancer
+# Commande a taper  lorsque le projet est lancer
 
           #use_output "dune ocaml top-module bin/main.ml" ;;
           
