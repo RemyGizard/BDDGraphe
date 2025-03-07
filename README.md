@@ -6,7 +6,7 @@
         opam install ppx_deriving
         opam update
         opam switch create 4.12.0
-        opam install ocmalgraph
+        opam install ocamlgraph
         opam install menhir
         opam install uTop
   ## Commande a taper
