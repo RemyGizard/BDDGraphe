@@ -45,8 +45,9 @@ clause:
 /* TODO: to be completed */
 pattern: 
 | np = npattern { SimpPattern np }
-| np = npattern ARROW p= pattern {CompPattern (np, "foo",p)}
+| np = npattern relspec p= pattern {CompPattern (np, "foo",p)}
 
+relspec: SUB LBRACKET COLON RBRACKET ARROW {}
 npattern: 
 | LPAREN; v = IDENTIFIER; COLON; t = IDENTIFIER; RPAREN { DeclPattern(v, t) }
 | LPAREN; v = IDENTIFIER; RPAREN { VarRefPattern(v) }
