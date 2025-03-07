@@ -4,6 +4,7 @@
         opam init
   ## bibliothèques a installer
         opam install ppx_deriving
+        opam update
         opam switch create 4.12.0
         opam install ocmalgraph
         opam install menhir
