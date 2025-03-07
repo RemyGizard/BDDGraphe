@@ -80,8 +80,8 @@ let check_expr e et env : tc_result =
 (* Instructions *)
 let verif_label lb env =
   match env.types with
-  | DBG (ntdecls, _) -> List.mem lb (List.map (fun (DBN(n, _)) -> n) ntdecls)
-  | _ -> false  (* Si jamais `env.types` n'est pas valide *)
+  | DBG (ntdecls, _) -> List.mem lb (List.map (fun (DBN(n, _)) -> n) ntdecls);;
+
 
 let verif_declared_var vn env =
   List.exists (fun (v, _) -> v = vn) env.bindings ;;

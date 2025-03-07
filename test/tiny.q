@@ -2,5 +2,5 @@
 (:B {})
 
 create (a:A)
-create (b:B)
+create (b:C)->(a:A)
 

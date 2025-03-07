@@ -45,6 +45,7 @@ clause:
 /* TODO: to be completed */
 pattern: 
 | np = npattern { SimpPattern np }
+| np = npattern ARROW p= npattern {CompPattern (np, "foo",p)}
 
 npattern: 
 | LPAREN; v = IDENTIFIER; COLON; t = IDENTIFIER; RPAREN { DeclPattern(v, t) }
