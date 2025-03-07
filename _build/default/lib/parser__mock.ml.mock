@@ -302,7 +302,7 @@ and (xv_tpDecl, xv_separated_nonempty_list_COMMA_pattern_, xv_separated_nonempty
 # 48 "lib/parser.mly"
                       p
 # 306 "lib/parser__mock.ml.mock"
-   : 'tv_npattern) (_startpos_p_ : Lexing.position) (_endpos_p_ : Lexing.position) (_startofs_p_ : int) (_endofs_p_ : int) (_loc_p_ : Lexing.position * Lexing.position) (
+   : 'tv_pattern) (_startpos_p_ : Lexing.position) (_endpos_p_ : Lexing.position) (_startofs_p_ : int) (_endofs_p_ : int) (_loc_p_ : Lexing.position * Lexing.position) (
 # 48 "lib/parser.mly"
                _2
 # 310 "lib/parser__mock.ml.mock"
@@ -313,7 +313,7 @@ and (xv_tpDecl, xv_separated_nonempty_list_COMMA_pattern_, xv_separated_nonempty
    : 'tv_npattern) (_startpos_np_ : Lexing.position) (_endpos_np_ : Lexing.position) (_startofs_np_ : int) (_endofs_np_ : int) (_loc_np_ : Lexing.position * Lexing.position) : 'tv_pattern ->
     
 # 48 "lib/parser.mly"
-                                  (CompPattern (np, "foo",p))
+                                 (CompPattern (np, "foo",p))
 # 319 "lib/parser__mock.ml.mock"
      in
   let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (

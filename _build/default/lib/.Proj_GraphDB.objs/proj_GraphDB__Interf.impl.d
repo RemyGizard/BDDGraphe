@@ -1,1 +1,1 @@
-lib/interf.pp.ml: Display Instr Lang Lexer Lexing Parser Printf Sem Stdlib Typing
+lib/interf.pp.ml: Lang Lexer Lexing Parser Printf Stdlib

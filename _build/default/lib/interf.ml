@@ -57,6 +57,7 @@ let run_interactive () =
 (* Run the file with name fn (a string),
    including parsing, type checking, displaying the output
  *)
+ (*
 let run_file fn = 
   let p = run_parser_error_reporting (Some fn) in
   let np = Typing.typecheck true (Instr.normalize_prog p) in 
@@ -65,6 +66,12 @@ let run_file fn =
   Printf.printf "%s\n" (Sem.show_vname_nodeid_table tab);
   Display.output_table tab;
   Display.output_graph_struct g
+
+*)
+
+let run_file fn = 
+  let p = run_parser_error_reporting (Some fn) in
+  Printf.printf "%s\n" (Lang.show_prog p)
 
 (* Print the help message *)
 let print_help () = print_string "Run as:\n Code_Graph [h | i | f <filename> ] \n "
