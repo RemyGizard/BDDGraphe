@@ -1,6 +1,6 @@
 # BDDGraphe
 ## COMMANDE FACILE
-./setup.sh
+exécuter la commande : "./commande_depart.sh" dans BDDGraphe .
 
 si ça ne fonctionne pas , utilise cette alternative
 ## Commande a taper pour lancer le projet si la première version ne marche pas
