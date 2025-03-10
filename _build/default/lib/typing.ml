@@ -47,16 +47,13 @@ let types_unique ntdecls =
     
   (* TODO: fill in details *)
   let check_graph_types (DBG (ntdecls, rtdecls)) = 
-    if types_declared ntdecls rtdecls then
-      if types_unique ntdecls then
-        if relations_unique rtdecls then
-          Result.Ok () 
-        else
-          Result.Error "relations dupliquées"
-      else
-        Result.Error "types de nœuds dupliqués"
-    else
-      Result.Error "types non déclarés"
+    let errors = 
+      (if not (types_declared ntdecls rtdecls) then ["Types non déclarés"] else []) @
+      (if not (types_unique ntdecls) then ["Types de nœuds dupliqués"] else []) @
+      (if not (relations_unique rtdecls) then ["Relations dupliquées"] else [])
+    in
+    if errors = [] then Result.Ok () else Result.Error errors
+  
   
 
 (* TODO: fill in details *)
@@ -89,15 +86,51 @@ let verif_declared_var vn env =
 let add_var_to_env vn lb env =
   { env with bindings = (vn, lb) :: env.bindings } ;;
 
-let tc_instr (i: instruction) (env: environment) : tc_result = 
-  match i with
-  | IActOnNode (CreateAct, vn, lb) -> 
-      if not (verif_label lb env) 
-      then Result.Error ["label non déclaré"]
-      else if verif_declared_var vn env 
-      then Result.Error ["var déjà déclarée"]
-      else Result.Ok (add_var_to_env vn lb env)
-  | _  -> Result.Error ["instruction non implémentée"] ;;
+  let tc_instr (i: instruction) (env: environment) : tc_result = 
+    match i with
+    | IActOnNode (CreateAct, vn, lb) 
+    | IActOnNode (MatchAct, vn, lb) -> 
+        if not (verif_label lb env) 
+        then Result.Error ["Label non déclaré"]
+        else if verif_declared_var vn env && i = IActOnNode (CreateAct, vn, lb)
+        then Result.Error ["Variable déjà déclarée"]
+        else Result.Ok (add_var_to_env vn lb env)
+  
+    | IActOnRel (CreateAct, vn1, lb, vn2)
+    | IActOnRel (MatchAct, vn1, lb, vn2) ->
+        if not (verif_declared_var vn1 env) || not (verif_declared_var vn2 env)
+        then Result.Error ["Variable source ou destination non déclarée"]
+        else Result.Ok env
+  
+    | IDeleteNode vn ->
+        if not (verif_declared_var vn env)
+        then Result.Error ["Variable à supprimer non déclarée"]
+        else Result.Ok { env with bindings = List.remove_assoc vn env.bindings }
+  
+    | IDeleteRel (vn1, lb, vn2) ->
+        if not (verif_declared_var vn1 env) || not (verif_declared_var vn2 env)
+        then Result.Error ["Variable source ou destination non déclarée"]
+        else Result.Ok env
+  
+    | IReturn vnames ->
+        if List.exists (fun vn -> not (verif_declared_var vn env)) vnames
+        then Result.Error ["Variable inconnue dans return"]
+        else if no_duplicates vnames
+        then Result.Ok { env with bindings = List.filter (fun (v, _) -> List.mem v vnames) env.bindings }
+        else Result.Error ["Variables dupliquées dans return"]
+  
+    | IWhere expr ->
+        (match check_expr expr BoolT env with
+         | Result.Ok _ -> Result.Ok env
+         | Result.Error e -> Result.Error e)
+  
+    | ISet (vn, attr, expr) ->
+        if not (verif_declared_var vn env)
+        then Result.Error ["Variable inconnue dans set"]
+        else Result.Ok env
+  
+    | _  -> Result.Error ["Instruction non implémentée"]
+   ;;
 
         
 

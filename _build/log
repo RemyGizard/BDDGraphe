@@ -1,9 +1,9 @@
-# dune utop
+# dune exec Proj_GraphDB f test/tiny.q
 # OCAMLPARAM: unset
 # Shared cache: enabled-except-user-rules
-# Shared cache location: /home/rescolan/.cache/dune/db
-# Workspace root: /home/rescolan/projet/BDDGraphe
-# Auto-detected concurrency: 12
+# Shared cache location: /home/maitamma/.cache/dune/db
+# Workspace root: /home/maitamma/BDDGraphe
+# Auto-detected concurrency: 6
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -13,5 +13,3 @@
 #  ; build_dir = In_build_dir "default"
 #  ; instrument_with = []
 #  }
-$ /home/rescolan/.opam/4.12.0/bin/ocamlc.opt -config > /tmp/dune_bb1b29_output
-$ (cd _build/default && /home/rescolan/.opam/4.12.0/bin/ocamlc.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -o .utop/utop.bc /home/rescolan/.opam/4.12.0/lib/ocaml/compiler-libs/ocamlcommon.cma /home/rescolan/.opam/4.12.0/lib/ocaml/compiler-libs/ocamlbytecomp.cma /home/rescolan/.opam/4.12.0/lib/ocaml/compiler-libs/ocamltoplevel.cma /home/rescolan/.opam/4.12.0/lib/findlib/findlib.cma /home/rescolan/.opam/4.12.0/lib/findlib/findlib_top.cma /home/rescolan/.opam/4.12.0/lib/logs/logs.cma /home/rescolan/.opam/4.12.0/lib/lwt/lwt.cma /home/rescolan/.opam/4.12.0/lib/logs/logs_lwt.cma /home/rescolan/.opam/4.12.0/lib/ocaml/unix.cma /home/rescolan/.opam/4.12.0/lib/ocaml/bigarray.cma /home/rescolan/.opam/4.12.0/lib/ocplib-endian/ocplib_endian.cma /home/rescolan/.opam/4.12.0/lib/ocplib-endian/bigstring/ocplib_endian_bigstring.cma /home/rescolan/.opam/4.12.0/lib/ocaml/threads/threads.cma /home/rescolan/.opam/4.12.0/lib/lwt/unix/lwt_unix.cma -I /home/rescolan/.opam/4.12.0/lib/lwt/../stublibs /home/rescolan/.opam/4.12.0/lib/react/react.cma /home/rescolan/.opam/4.12.0/lib/lwt_react/lwt_react.cma /home/rescolan/.opam/4.12.0/lib/result/result.cma /home/rescolan/.opam/4.12.0/lib/uutf/uutf.cma /home/rescolan/.opam/4.12.0/lib/uucp/uucp.cma /home/rescolan/.opam/4.12.0/lib/uuseg/uuseg.cma /home/rescolan/.opam/4.12.0/lib/zed/zed.cma /home/rescolan/.opam/4.12.0/lib/trie/trie.cma /home/rescolan/.opam/4.12.0/lib/mew/mew.cma /home/rescolan/.opam/4.12.0/lib/mew_vi/mew_vi.cma /home/rescolan/.opam/4.12.0/lib/lambda-term/lambda_term.cma -I /home/rescolan/.opam/4.12.0/lib/lambda-term/../stublibs /home/rescolan/.opam/4.12.0/lib/xdg/xdg.cma -I /home/rescolan/.opam/4.12.0/lib/xdg/../stublibs /home/rescolan/.opam/4.12.0/lib/utop/uTop.cma /home/rescolan/.opam/4.12.0/lib/stdlib-shims/stdlib_shims.cma /home/rescolan/.opam/4.12.0/lib/ocamlgraph/graph.cma /home/rescolan/.opam/4.12.0/lib/ppx_deriving/runtime/ppx_deriving_runtime.cma lib/Proj_GraphDB.cma .utop/.utop.eobjs/byte/dune__exe__Utop.cmo -linkall -warn-error -31)
