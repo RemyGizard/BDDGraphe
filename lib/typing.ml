@@ -161,7 +161,7 @@ let tc_instr (i: instruction) (env: environment) : tc_result =
                          with
                          | TypeError s | FieldAccError s -> Result.Error [s])
 
-  | _ -> Result.Error ["Instruction non implémentée"]
+
 
 (* Instructions multiples *)
 
