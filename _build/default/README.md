@@ -1,15 +1,20 @@
 # BDDGraphe
-# Commande a taper pour lancer le projet 
-  ## première commande
+## COMMANDE FACILE
+exécuter la commande : "./commande_depart.sh" dans BDDGraphe .
+
+si ça ne fonctionne pas , utilise cette alternative
+## Commande a taper pour lancer le projet si la première version ne marche pas
+  ### première commande
         opam init
-  ## bibliothèques a installer
+  ### bibliothèques a installer
         opam install ppx_deriving
         opam install ocamlgraph
         opam install menhir
         opam install uTop
-  ## Commande a taper
+  ### Commande a taper
         eval $(opam env)
         opam install dune
+        dune init  Proj_GraphDB
         dune exec Proj_GraphDB f test/tiny.q
         dune build 
         dune utop
