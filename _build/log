@@ -2,8 +2,8 @@
 # OCAMLPARAM: unset
 # Shared cache: enabled-except-user-rules
 # Shared cache location: /home/maitamma/.cache/dune/db
-# Workspace root: /home/maitamma/Documents/BDDGraphe
-# Auto-detected concurrency: 6
+# Workspace root: /home/maitamma/BDDGraphe
+# Auto-detected concurrency: 12
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -13,50 +13,6 @@
 #  ; build_dir = In_build_dir "default"
 #  ; instrument_with = []
 #  }
-$ /usr/bin/ocamlc.opt -config > /tmp/dune_5ed3db_output
-$ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -8-27-32-39 -g -bin-annot -I lib/.Proj_GraphDB.objs/byte -I /home/maitamma/.opam/default/lib/ocamlgraph -I /home/maitamma/.opam/default/lib/ppx_deriving -I /home/maitamma/.opam/default/lib/ppx_deriving/runtime -I /home/maitamma/.opam/default/lib/stdlib-shims -no-alias-deps -opaque -open Proj_GraphDB -o lib/.Proj_GraphDB.objs/byte/proj_GraphDB__Typing.cmo -c -impl lib/typing.pp.ml)
-> File "lib/typing.ml", line 132, characters 6-7:
-> 132 |     | _  -> Result.Error ["Instruction non implémentée"]
->             ^
-> Error (warning 11 [redundant-case]): this match case is unused.
-> File "lib/typing.ml", line 61, characters 8-9:
-> 61 |   Const v -> IntT
->              ^
-> Warning 27 [unused-var-strict]: unused variable v.
-> File "lib/typing.ml", line 62, characters 13-15:
-> 62 | | AttribAcc (vn, fn) -> IntT
->                   ^^
-> Warning 27 [unused-var-strict]: unused variable vn.
-> File "lib/typing.ml", line 62, characters 17-19:
-> 62 | | AttribAcc (vn, fn) -> IntT
->                       ^^
-> Warning 27 [unused-var-strict]: unused variable fn.
-> File "lib/typing.ml", line 63, characters 9-12:
-> 63 | | BinOp (bop, e1, e2) -> tp_expr env e1
->               ^^^
-> Warning 27 [unused-var-strict]: unused variable bop.
-> File "lib/typing.ml", line 63, characters 18-20:
-> 63 | | BinOp (bop, e1, e2) -> tp_expr env e1
->                        ^^
-> Warning 27 [unused-var-strict]: unused variable e2.
-> File "lib/typing.ml", line 99, characters 33-35:
-> 99 |     | IActOnRel (CreateAct, vn1, lb, vn2)
->                                       ^^
-> Warning 27 [unused-var-strict]: unused variable lb.
-> File "lib/typing.ml", line 110, characters 23-25:
-> 110 |     | IDeleteRel (vn1, lb, vn2) ->
->                              ^^
-> Warning 27 [unused-var-strict]: unused variable lb.
-> File "lib/typing.ml", line 127, characters 16-20:
-> 127 |     | ISet (vn, attr, expr) ->
->                       ^^^^
-> Warning 27 [unused-var-strict]: unused variable attr.
-> File "lib/typing.ml", line 127, characters 22-26:
-> 127 |     | ISet (vn, attr, expr) ->
->                             ^^^^
-> Warning 27 [unused-var-strict]: unused variable expr.
-> File "lib/typing.ml", line 146, characters 27-35:
-> 146 | let typecheck_instructions continue gt instrs np = 
->                                  ^^^^^^^^
-> Warning 27 [unused-var-strict]: unused variable continue.
-[2]
+$ /usr/bin/ocamlc.opt -config > /tmp/dune_a08051_output
+$ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -bin-annot -I .utop/.utop.eobjs/byte -I /home/maitamma/.opam/default/lib/bytes -I /home/maitamma/.opam/default/lib/findlib -I /home/maitamma/.opam/default/lib/lambda-term -I /home/maitamma/.opam/default/lib/logs -I /home/maitamma/.opam/default/lib/lwt -I /home/maitamma/.opam/default/lib/lwt/unix -I /home/maitamma/.opam/default/lib/lwt_react -I /home/maitamma/.opam/default/lib/mew -I /home/maitamma/.opam/default/lib/mew_vi -I /home/maitamma/.opam/default/lib/ocamlgraph -I /home/maitamma/.opam/default/lib/ocplib-endian -I /home/maitamma/.opam/default/lib/ocplib-endian/bigstring -I /home/maitamma/.opam/default/lib/ppx_deriving -I /home/maitamma/.opam/default/lib/ppx_deriving/runtime -I /home/maitamma/.opam/default/lib/react -I /home/maitamma/.opam/default/lib/result -I /home/maitamma/.opam/default/lib/stdlib-shims -I /home/maitamma/.opam/default/lib/trie -I /home/maitamma/.opam/default/lib/uchar -I /home/maitamma/.opam/default/lib/utop -I /home/maitamma/.opam/default/lib/uucp -I /home/maitamma/.opam/default/lib/uuseg -I /home/maitamma/.opam/default/lib/uutf -I /home/maitamma/.opam/default/lib/xdg -I /home/maitamma/.opam/default/lib/zed -I /usr/lib/ocaml/compiler-libs -I /usr/lib/ocaml/threads -I lib/.Proj_GraphDB.objs/byte -no-alias-deps -o .utop/.utop.eobjs/byte/dune__exe__Utop.cmo -c -impl .utop/utop.ml-gen)
+$ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -o .utop/utop.bc /usr/lib/ocaml/compiler-libs/ocamlcommon.cma /usr/lib/ocaml/compiler-libs/ocamlbytecomp.cma /usr/lib/ocaml/compiler-libs/ocamltoplevel.cma /home/maitamma/.opam/default/lib/findlib/findlib.cma /home/maitamma/.opam/default/lib/findlib/findlib_top.cma /home/maitamma/.opam/default/lib/logs/logs.cma /home/maitamma/.opam/default/lib/lwt/lwt.cma /home/maitamma/.opam/default/lib/logs/logs_lwt.cma /usr/lib/ocaml/unix.cma /usr/lib/ocaml/bigarray.cma /home/maitamma/.opam/default/lib/ocplib-endian/ocplib_endian.cma /home/maitamma/.opam/default/lib/ocplib-endian/bigstring/ocplib_endian_bigstring.cma /usr/lib/ocaml/threads/threads.cma /home/maitamma/.opam/default/lib/lwt/unix/lwt_unix.cma -I /home/maitamma/.opam/default/lib/lwt/../stublibs /home/maitamma/.opam/default/lib/react/react.cma /home/maitamma/.opam/default/lib/lwt_react/lwt_react.cma /home/maitamma/.opam/default/lib/result/result.cma /home/maitamma/.opam/default/lib/uutf/uutf.cma /home/maitamma/.opam/default/lib/uucp/uucp.cma /home/maitamma/.opam/default/lib/uuseg/uuseg.cma /home/maitamma/.opam/default/lib/zed/zed.cma /home/maitamma/.opam/default/lib/trie/trie.cma /home/maitamma/.opam/default/lib/mew/mew.cma /home/maitamma/.opam/default/lib/mew_vi/mew_vi.cma /home/maitamma/.opam/default/lib/lambda-term/lambda_term.cma -I /home/maitamma/.opam/default/lib/lambda-term/../stublibs /home/maitamma/.opam/default/lib/xdg/xdg.cma -I /home/maitamma/.opam/default/lib/xdg/../stublibs /home/maitamma/.opam/default/lib/utop/uTop.cma /home/maitamma/.opam/default/lib/stdlib-shims/stdlib_shims.cma /home/maitamma/.opam/default/lib/ocamlgraph/graph.cma /home/maitamma/.opam/default/lib/ppx_deriving/runtime/ppx_deriving_runtime.cma lib/Proj_GraphDB.cma .utop/.utop.eobjs/byte/dune__exe__Utop.cmo -linkall -warn-error -31)

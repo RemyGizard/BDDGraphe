@@ -26,6 +26,6 @@ Clflags.include_dirs :=
   ; "/home/maitamma/.opam/default/lib/zed"
   ; "/usr/lib/ocaml/compiler-libs"
   ; "/usr/lib/ocaml/threads"
-  ; "/home/maitamma/Documents/BDDGraphe/_build/default/lib/.Proj_GraphDB.objs/byte"
+  ; "/home/maitamma/BDDGraphe/_build/default/lib/.Proj_GraphDB.objs/byte"
   ];
 UTop_main.main ();

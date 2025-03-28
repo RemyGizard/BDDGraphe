@@ -175,8 +175,8 @@ let typecheck continue (NormProg(gt, NormQuery instrs) as np) =
 let print_tc_result msg r =
   Printf.printf "\n%s\n" msg;
   match r with
-  | Result.Ok _ -> Printf.printf "✅ OK\n"
-  | Result.Error errs -> List.iter (fun e -> Printf.printf "❌ %s\n" e) errs
+  | Result.Ok _ -> Printf.printf " OK\n"
+  | Result.Error errs -> List.iter (fun e -> Printf.printf " %s\n" e) errs
 
 let test_types = DBG (
   [ DBN ("P", [("nom", StringT); ("age", IntT)]);
@@ -209,7 +209,7 @@ let test_norm () =
     IReturn ["a"]
   ]) in
   let _ = typecheck false prog in
-  Printf.printf "\nTest NormProg : ✅ OK\n"
+  Printf.printf "\nTest NormProg :  OK\n"
 
 let test_norm_invalid () =
   let prog = NormProg(test_types, NormQuery [
@@ -217,9 +217,11 @@ let test_norm_invalid () =
     IActOnRel (CreateAct, "a", "emp", "z");
   ]) in
   try ignore (typecheck false prog)
-  with Failure _ -> Printf.printf "\nTest NormProg invalide : ❌ Erreur attendue\n"
+  with Failure _ -> Printf.printf "\nTest NormProg invalide :  Erreur attendue\n"
 
-(* Uncomment to auto-run: *)
-(*** let _ = test_1 (); test_2 (); test_3 (); test_4 (); test_5 (); test_6 (); test_7 (); test_8 (); test_9 (); test_10 (); test_11 (); test_12 (); test_13 (); test_norm (); test_norm_invalid () *)
-
+  let run_tests () =
+    test_1 (); test_2 (); test_3 (); test_4 (); test_5 ();
+    test_6 (); test_7 (); test_8 (); test_9 (); test_10 ();
+    test_11 (); test_12 (); test_13 (); test_norm (); test_norm_invalid ()
+  
 

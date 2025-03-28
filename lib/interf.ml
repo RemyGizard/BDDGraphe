@@ -69,9 +69,27 @@ let run_file fn =
 
 *)
 
+let run_tests () =
+  Typing.test_1 (); Typing.test_2 (); Typing.test_3 ();
+  Typing.test_4 (); Typing.test_5 (); Typing.test_6 ();
+  Typing.test_7 (); Typing.test_8 (); Typing.test_9 ();
+  Typing.test_10 (); Typing.test_11 (); Typing.test_12 (); Typing.test_13 ();
+  Typing.test_norm ();
+  Typing.test_norm_invalid ()
+;;
+
 let run_file fn = 
   let p = run_parser_error_reporting (Some fn) in
-  Printf.printf "%s\n" (Lang.show_prog p)
+  let np = Instr.normalize_prog p in
+  let _ = Typing.typecheck true np in
+  Printf.printf "\n Parsing + Typage réussi !\n";
+  Printf.printf "%s\n" (Lang.show_prog p);
+  Printf.printf "---------------- TESTS --------------\n";
+  run_tests ()
+;;
+
+  
 
 (* Print the help message *)
 let print_help () = print_string "Run as:\n Code_Graph [h | i | f <filename> ] \n "
+
