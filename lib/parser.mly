@@ -33,8 +33,12 @@ tpDecl:
 | n = nodeTpDecl { Either.Left n }
 | r = relTpDecl { Either.Right r }
 
+(* ==== Partie que tu as ajoutée ==== *)
+
+(* Une requête est une suite de clauses comme CREATE, MATCH, etc. *)
 query: cls = list(clause) { Query cls }
 
+(* Voici toutes les instructions que le langage comprend *)
 clause: 
 | CREATE; pts = separated_list(COMMA, pattern) { Create pts }
 | MATCH; pts = separated_list(COMMA, pattern)  { Match pts }
@@ -43,34 +47,42 @@ clause:
 | WHERE; e = expr                               { Where e }
 | SET; sets = separated_list(COMMA, set_item)   { Set sets }
 
+(* Une affectation SET : x.nom = "Alice" *)
 set_item:
 | vn = IDENTIFIER; DOT; fn = IDENTIFIER; EQ; e = expr
     { (vn, fn, e) }
 
+(* Un motif peut être simple ou composé avec relation *)
 pattern: 
 | np = npattern                                { SimpPattern np }
 | np = npattern; lbl = relspec; p = pattern    { CompPattern (np, lbl, p) }
 
+(* Une relation entre motifs *)
 relspec: 
 | SUB; LBRACKET; COLON; l = IDENTIFIER; RBRACKET; ARROW { l }
 
+(* Deux formes de motifs de nœud : avec ou sans type *)
 npattern: 
 | LPAREN; v = IDENTIFIER; COLON; t = IDENTIFIER; RPAREN { DeclPattern(v, t) }
 | LPAREN; v = IDENTIFIER; RPAREN                         { VarRefPattern(v) }
 
+(* Supprimer des nœuds ou des relations *)
 delete_pattern:
 | LBRACKET; COLON; IDENTIFIER; RBRACKET; vars = del_nodes { DeleteNodes vars }
 | rels = separated_list(COMMA, del_rel)                   { DeleteRels rels }
 
+(* Liste de nœuds à supprimer *)
 del_nodes:
 | LPAREN; vars = separated_list(COMMA, IDENTIFIER); RPAREN { vars }
 
+(* Supprimer une relation entre deux variables *)
 del_rel:
 | LPAREN; src = IDENTIFIER; COMMA; lbl = IDENTIFIER; COMMA; dst = IDENTIFIER; RPAREN
     { (src, lbl, dst) }
 
-/* Expressions */
+(* ==== Fin de ta partie ajoutée ==== *)
 
+(* Expressions primaires possibles *)
 primary_expr:
 | vn = IDENTIFIER; DOT; fn = IDENTIFIER 
      { AttribAcc(vn, fn) }
@@ -83,6 +95,7 @@ primary_expr:
 | LPAREN e = expr RPAREN
      { e }
 
+(* Toutes les opérations possibles sur les expressions *)
 expr:
 | e1 = expr; ADD; e2 = expr { BinOp (BArith BAadd, e1, e2) }
 | e1 = expr; SUB; e2 = expr { BinOp (BArith BAsub, e1, e2) }
@@ -99,8 +112,7 @@ expr:
 | e1 = expr; BLOR;  e2 = expr { BinOp (BLogic BLor, e1, e2) }
 | a = primary_expr { a }
 
-/* Types */
-
+(* Déclaration d’un type de nœud avec ses attributs *)
 nodeTpDecl: LPAREN; COLON; i = IDENTIFIER; a = attrib_declList; RPAREN  { DBN (i, a) }
 
 attrib_decl: i = IDENTIFIER; t = TP { (i, t) }
@@ -108,8 +120,7 @@ attrib_decl: i = IDENTIFIER; t = TP { (i, t) }
 attrib_declList: 
 | LBRACE; ads = separated_list(COMMA, attrib_decl); RBRACE { ads }
 
-/* Relational type declarations of the form (:nt1) -[:rt]-> (:nt2) */
-
+(* Déclaration d’un type de relation entre deux types de nœuds *)
 nodeTpRef: LPAREN; COLON; si = IDENTIFIER; RPAREN { si }
 
 relTpDecl: 
