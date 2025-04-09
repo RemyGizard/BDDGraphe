@@ -30,7 +30,11 @@ let normalize_node_pattern act = function
 
 let rec normalize_pattern act = function 
 | SimpPattern p -> normalize_node_pattern act p
-| CompPattern (npt, rl, pt) -> failwith "not yet implemented"
+| CompPattern (npt, rl, pt) ->
+  let (v1, instrs1) = normalize_node_pattern act npt in
+  let (v2, instrs2) = normalize_pattern act pt in
+  let rel_instr = IActOnRel (act, v1, rl, v2) in
+  (v1, instrs1 @ instrs2 @ [rel_instr])
 
 let normalize_clause = function
   | Create pats -> 
