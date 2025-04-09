@@ -98,5 +98,29 @@ si ça ne fonctionne pas , utilise cette alternative
     Permet d'exécuter le fichier source en appelant le parser puis le vérificateur
 
     Gère l'affichage des erreurs de parsing et de typage
+## 4. sem.ml – Exécution des instructions (sémantique)
 
+ ### Fonctionnalités ajoutées aujourd’hui :
+
+    Implémentation de la création de relations (arcs) entre deux nœuds via l'instruction :
+
+    IActOnRel (CreateAct, var1, label, var2)
+
+    Cela permet de construire un arc var1 -[:label]-> var2 dans le graphe.
+
+ #### Ajout de create_rel qui :
+
+    récupère les identifiants (nodeid) des variables source/destination
+
+    construit une relation de type DBR(...)
+
+    l’insère dans le graphe à l’aide de add_rel_to_graph
+
+ #### Affichage final du graphe exécuté, avec les nœuds et relations, dans interf.ml :
+
+    Grâce à Sem.exec et Sem.show_db_graph_struct, on visualise maintenant le graphe construit dans le terminal après exécution.  
+ #### Rôle dans l’exécution :
+
+    Permet l’exécution réelle des instructions CREATE (nœuds et arcs) et la visualisation concrète du graphe résultant après parsing et typage.
+    
 *Lors de notre projet nous avons utiliser ChatGPT de manière modéré pour nous débloquer sur les problèmes que nous avons rencontrés lors de la mise en oeuvre du projet*
