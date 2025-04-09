@@ -2,34 +2,55 @@ open Graphstruct
 open Lang
 open Instr
 
-(* === Types et Environnement === *)
+(*  Types et Environnement  *)
+
+(* L'environnement contient :
+   - les types définis dans le graphe (types de nœuds, relations, attributs),
+   - les variables déclarées et leur label associé *)
 type environment = { types:  db_tp; bindings: (vname * label) list }
+
+(* Crée un environnement initial vide (aucune variable déclarée) *)
 let initial_environment gt = {types = gt; bindings = []}
+
+(* Retourne un résultat OK avec l’environnement initial *)
 let initial_result gt = Result.Ok (initial_environment gt)
 
+(* Exceptions personnalisées pour signaler des erreurs de champ ou de type *)
 exception FieldAccError of string
 exception TypeError of string
 
+(* Type de résultat pour le typage : soit OK avec un environnement, soit une liste d’erreurs *)
 type tc_result = (environment, string list) result
 
-(* === Fonctions auxiliaires === *)
+
+
+(*  Fonctions auxiliaires  *)
+
+(* Ajoute une variable à l’environnement *)
 let add_var vn t (env:environment) = {env with bindings = (vn,t)::env.bindings}
+
+(* Supprime une variable de l’environnement *)
 let remove_var vn env = {env with bindings = List.remove_assoc vn env.bindings}
 
+(* Vérifie qu’une liste ne contient pas de doublons *)
 let rec no_duplicates = function
   | [] -> true
   | x::xs -> not (List.mem x xs) && no_duplicates xs
 
+(* Vérifie que les noms de types de nœuds sont uniques *)
 let types_unique ntdecls =
   no_duplicates (List.map (fun (DBN(n, _)) -> n) ntdecls)
 
+(* Vérifie que les relations sont uniques (source, label, destination) *)
 let relations_unique rtdecls =
   no_duplicates (List.map (fun (DBR(src, label, dest)) -> (src, label, dest)) rtdecls)
 
+(* Vérifie que les types utilisés dans les relations ont été déclarés *)
 let types_declared ntdecls rtdecls =
   let node_types = List.map (fun (DBN(n, _)) -> n) ntdecls in
   List.for_all (fun (DBR(src, _, dest)) -> List.mem src node_types && List.mem dest node_types) rtdecls
 
+(* Fonction principale pour vérifier que la déclaration du graphe est correcte *)
 let check_graph_types (DBG (ntdecls, rtdecls)) =
   let errors =
     (if not (types_declared ntdecls rtdecls) then ["Types non déclarés"] else []) @
@@ -38,15 +59,23 @@ let check_graph_types (DBG (ntdecls, rtdecls)) =
   in
   if errors = [] then Result.Ok () else Result.Error errors
 
-(* === Typage des expressions === *)
+
+
+
+
+(*  Typage des expressions *)
+
+(* Déduit le type d’une expression selon l’environnement *)
 let rec tp_expr env = function
   | Const (IntV _) -> IntT
   | Const (BoolV _) -> BoolT
   | Const (StringV _) -> StringT
   | AttribAcc (vn, fn) ->
+    (* Accès à un attribut : on vérifie si la variable est connue *)
     (match List.assoc_opt vn env.bindings with
      | None -> raise (FieldAccError ("Variable " ^ vn ^ " non déclarée"))
      | Some label ->
+       (* On retrouve la définition du label dans le graphe *)
        match env.types with
        | DBG (ntdecls, _) ->
          let rec find = function
@@ -62,22 +91,17 @@ let rec tp_expr env = function
     let t1 = tp_expr env e1 in
     let t2 = tp_expr env e2 in
     match bop with
-    | BArith op ->
-      (match op with
-       | BAadd | BAsub | BAmul | BAdiv | BAmod ->
+    | BArith _ ->
          if t1 = IntT && t2 = IntT then IntT
-         else raise (TypeError "Erreur : opération arithmétique mal typée"))
-    | BCompar op ->
-      (match op with
-       | BCeq | BCge | BCgt | BCle | BClt | BCne ->
+         else raise (TypeError "Erreur : opération arithmétique mal typée")
+    | BCompar _ ->
          if t1 = IntT && t2 = IntT then BoolT
-         else raise (TypeError "Erreur : comparaison mal typée"))
-    | BLogic op ->
-      (match op with
-       | BLand | BLor ->
+         else raise (TypeError "Erreur : comparaison mal typée")
+    | BLogic _ ->
          if t1 = BoolT && t2 = BoolT then BoolT
-         else raise (TypeError "Erreur : opération logique mal typée"))
+         else raise (TypeError "Erreur : opération logique mal typée")
 
+(* Vérifie qu’une expression a bien le type attendu *)
 let check_expr e et env : tc_result =
   try
     if tp_expr env e = et then Result.Ok env
@@ -86,17 +110,25 @@ let check_expr e et env : tc_result =
   | TypeError s -> Result.Error [s]
   | FieldAccError s -> Result.Error [s]
 
-(* === Vérification des instructions === *)
+
+
+
+(*  Vérification des instructions *)
+
+(* Vérifie qu’un label est bien déclaré *)
 let verif_label lb env =
   match env.types with
   | DBG (ntdecls, _) -> List.mem lb (List.map (fun (DBN(n, _)) -> n) ntdecls)
 
+(* Vérifie qu’une variable est déjà déclarée *)
 let verif_declared_var vn env =
   List.exists (fun (v, _) -> v = vn) env.bindings
 
+(* Ajoute une variable à l’environnement *)
 let add_var_to_env vn lb env =
   { env with bindings = (vn, lb) :: env.bindings }
 
+(* Vérifie le typage d’une instruction *)
 let tc_instr (i: instruction) (env: environment) : tc_result =
   match i with
   | IActOnNode (CreateAct, vn, lb)
@@ -148,13 +180,20 @@ let tc_instr (i: instruction) (env: environment) : tc_result =
                with
                | TypeError s | FieldAccError s -> Result.Error [s])
 
-(* === Vérification de programme complet === *)
+
+
+
+(* Vérification d’un programme complet  *)
+
+(* Applique tc_instr à chaque instruction si le résultat précédent est OK *)
 let check_and_stop (res : tc_result) i : tc_result =
   Result.bind res (tc_instr i)
 
+(* Applique la vérification à toute la liste d’instructions *)
 let tc_instrs_stop gt instrs : tc_result =
   List.fold_left check_and_stop (initial_result gt) instrs
 
+(* Lance le typage sur un programme *)
 let typecheck_instructions continue gt instrs np =
   let r = tc_instrs_stop gt instrs in
   match r with
@@ -163,6 +202,7 @@ let typecheck_instructions continue gt instrs np =
     failwith "stopped"
   | _ -> np
 
+(* Fonction principale : vérifie les types du graphe puis les instructions *)
 let typecheck continue (NormProg(gt, NormQuery instrs) as np) =
   match check_graph_types gt with
   | Result.Error egt ->
@@ -171,21 +211,30 @@ let typecheck continue (NormProg(gt, NormQuery instrs) as np) =
   | Result.Ok _ ->
     typecheck_instructions continue gt instrs np
 
-(* === Tests === *)
+
+
+
+
+(*  Tests  *)
+
+(* Affiche le résultat d’un test *)
 let print_tc_result msg r =
   Printf.printf "\n%s\n" msg;
   match r with
   | Result.Ok _ -> Printf.printf " OK\n"
   | Result.Error errs -> List.iter (fun e -> Printf.printf " %s\n" e) errs
 
+(* Déclaration d’un graphe de test *)
 let test_types = DBG (
   [ DBN ("P", [("nom", StringT); ("age", IntT)]);
     DBN ("E", [("nom", StringT); ("pme", BoolT)]) ],
   [ DBR ("P", "ami", "P"); DBR ("P", "emp", "E"); DBR ("E", "f", "E") ])
 
+(* Deux environnements pour les tests *)
 let env0 = { types = test_types; bindings = [] }
 let env2 = { types = test_types; bindings = [("x", "P"); ("y", "P")] }
 
+(* Tests unitaires sur les instructions *)
 let test_1 () = print_tc_result "Test 1 - Création de noeud valide" (tc_instr (IActOnNode (CreateAct, "x", "P")) env0)
 let test_2 () = print_tc_result "Test 2 - Match d'un noeud valide" (tc_instr (IActOnNode (MatchAct, "y", "P")) env0)
 let test_3 () = print_tc_result "Test 3 - Label inexistant" (tc_instr (IActOnNode (CreateAct, "z", "X")) env0)
@@ -200,7 +249,8 @@ let test_11 () = print_tc_result "Test 11 - Set invalide (mauvais type)" (tc_ins
 let test_12 () = print_tc_result "Test 12 - WHERE correcte" (tc_instr (IWhere (BinOp (BCompar BCeq, AttribAcc ("x", "age"), Const (IntV 5)))) env2)
 let test_13 () = print_tc_result "Test 13 - WHERE incorrecte" (tc_instr (IWhere (BinOp (BLogic BLand, Const (BoolV true), Const (IntV 1)))) env2)
 
-(* === Test complet d’un programme normalisé === *)
+
+(* Test complet d’un programme normalisé *)
 let test_norm () =
   let prog = NormProg(test_types, NormQuery [
     IActOnNode (CreateAct, "a", "P");
@@ -211,6 +261,7 @@ let test_norm () =
   let _ = typecheck false prog in
   Printf.printf "\nTest NormProg :  OK\n"
 
+(* Test d’un programme avec erreur de typage *)
 let test_norm_invalid () =
   let prog = NormProg(test_types, NormQuery [
     IActOnNode (CreateAct, "a", "P");
@@ -219,9 +270,8 @@ let test_norm_invalid () =
   try ignore (typecheck false prog)
   with Failure _ -> Printf.printf "\nTest NormProg invalide :  Erreur attendue\n"
 
-  let run_tests () =
-    test_1 (); test_2 (); test_3 (); test_4 (); test_5 ();
-    test_6 (); test_7 (); test_8 (); test_9 (); test_10 ();
-    test_11 (); test_12 (); test_13 (); test_norm (); test_norm_invalid ()
-  
-
+(* Lance tous les tests *)
+let run_tests () =
+  test_1 (); test_2 (); test_3 (); test_4 (); test_5 ();
+  test_6 (); test_7 (); test_8 (); test_9 (); test_10 ();
+  test_11 (); test_12 (); test_13 (); test_norm (); test_norm_invalid ()

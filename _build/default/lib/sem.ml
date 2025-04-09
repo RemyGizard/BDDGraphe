@@ -68,3 +68,6 @@ let exec_instr s = function
 let exec (NormProg(_tps, NormQuery(instrs))) = 
   List.fold_left exec_instr initial_state instrs
 
+
+  
+

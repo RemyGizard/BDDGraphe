@@ -325,7 +325,7 @@ and _menhir_box_main =
 let _menhir_action_01 =
   fun i t ->
     (
-# 106 "lib/parser.mly"
+# 118 "lib/parser.mly"
                                     ( (i, t) )
 # 331 "lib/parser.ml"
      : (Lang.attrib_decl))
@@ -338,7 +338,7 @@ let _menhir_action_02 =
 # 339 "lib/parser.ml"
      in
     (
-# 109 "lib/parser.mly"
+# 121 "lib/parser.mly"
                                                            ( ads )
 # 344 "lib/parser.ml"
      : (Lang.attrib_decl list))
@@ -351,7 +351,7 @@ let _menhir_action_03 =
 # 352 "lib/parser.ml"
      in
     (
-# 39 "lib/parser.mly"
+# 43 "lib/parser.mly"
                                                ( Create pts )
 # 357 "lib/parser.ml"
      : (Lang.clause))
@@ -364,7 +364,7 @@ let _menhir_action_04 =
 # 365 "lib/parser.ml"
      in
     (
-# 40 "lib/parser.mly"
+# 44 "lib/parser.mly"
                                                ( Match pts )
 # 370 "lib/parser.ml"
      : (Lang.clause))
@@ -372,7 +372,7 @@ let _menhir_action_04 =
 let _menhir_action_05 =
   fun dp ->
     (
-# 41 "lib/parser.mly"
+# 45 "lib/parser.mly"
                                                 ( Delete dp )
 # 378 "lib/parser.ml"
      : (Lang.clause))
@@ -385,7 +385,7 @@ let _menhir_action_06 =
 # 386 "lib/parser.ml"
      in
     (
-# 42 "lib/parser.mly"
+# 46 "lib/parser.mly"
                                                    ( Return vars )
 # 391 "lib/parser.ml"
      : (Lang.clause))
@@ -393,7 +393,7 @@ let _menhir_action_06 =
 let _menhir_action_07 =
   fun e ->
     (
-# 43 "lib/parser.mly"
+# 47 "lib/parser.mly"
                                                 ( Where e )
 # 399 "lib/parser.ml"
      : (Lang.clause))
@@ -406,7 +406,7 @@ let _menhir_action_08 =
 # 407 "lib/parser.ml"
      in
     (
-# 44 "lib/parser.mly"
+# 48 "lib/parser.mly"
                                                 ( Set sets )
 # 412 "lib/parser.ml"
      : (Lang.clause))
@@ -419,7 +419,7 @@ let _menhir_action_09 =
 # 420 "lib/parser.ml"
      in
     (
-# 66 "lib/parser.mly"
+# 76 "lib/parser.mly"
                                                            ( vars )
 # 425 "lib/parser.ml"
      : (string list))
@@ -427,7 +427,7 @@ let _menhir_action_09 =
 let _menhir_action_10 =
   fun dst lbl src ->
     (
-# 70 "lib/parser.mly"
+# 81 "lib/parser.mly"
     ( (src, lbl, dst) )
 # 433 "lib/parser.ml"
      : (string * string * string))
@@ -435,7 +435,7 @@ let _menhir_action_10 =
 let _menhir_action_11 =
   fun vars ->
     (
-# 62 "lib/parser.mly"
+# 71 "lib/parser.mly"
                                                           ( DeleteNodes vars )
 # 441 "lib/parser.ml"
      : (Lang.delete_pattern))
@@ -448,7 +448,7 @@ let _menhir_action_12 =
 # 449 "lib/parser.ml"
      in
     (
-# 63 "lib/parser.mly"
+# 72 "lib/parser.mly"
                                                           ( DeleteRels rels )
 # 454 "lib/parser.ml"
      : (Lang.delete_pattern))
@@ -456,7 +456,7 @@ let _menhir_action_12 =
 let _menhir_action_13 =
   fun e1 e2 ->
     (
-# 87 "lib/parser.mly"
+# 100 "lib/parser.mly"
                             ( BinOp (BArith BAadd, e1, e2) )
 # 462 "lib/parser.ml"
      : (Lang.expr))
@@ -464,7 +464,7 @@ let _menhir_action_13 =
 let _menhir_action_14 =
   fun e1 e2 ->
     (
-# 88 "lib/parser.mly"
+# 101 "lib/parser.mly"
                             ( BinOp (BArith BAsub, e1, e2) )
 # 470 "lib/parser.ml"
      : (Lang.expr))
@@ -472,7 +472,7 @@ let _menhir_action_14 =
 let _menhir_action_15 =
   fun e1 e2 ->
     (
-# 89 "lib/parser.mly"
+# 102 "lib/parser.mly"
                             ( BinOp (BArith BAmul, e1, e2) )
 # 478 "lib/parser.ml"
      : (Lang.expr))
@@ -480,7 +480,7 @@ let _menhir_action_15 =
 let _menhir_action_16 =
   fun e1 e2 ->
     (
-# 90 "lib/parser.mly"
+# 103 "lib/parser.mly"
                             ( BinOp (BArith BAdiv, e1, e2) )
 # 486 "lib/parser.ml"
      : (Lang.expr))
@@ -488,7 +488,7 @@ let _menhir_action_16 =
 let _menhir_action_17 =
   fun e1 e2 ->
     (
-# 91 "lib/parser.mly"
+# 104 "lib/parser.mly"
                             ( BinOp (BArith BAmod, e1, e2) )
 # 494 "lib/parser.ml"
      : (Lang.expr))
@@ -496,7 +496,7 @@ let _menhir_action_17 =
 let _menhir_action_18 =
   fun e1 e2 ->
     (
-# 92 "lib/parser.mly"
+# 105 "lib/parser.mly"
                             ( BinOp (BCompar BCeq, e1, e2) )
 # 502 "lib/parser.ml"
      : (Lang.expr))
@@ -504,7 +504,7 @@ let _menhir_action_18 =
 let _menhir_action_19 =
   fun e1 e2 ->
     (
-# 93 "lib/parser.mly"
+# 106 "lib/parser.mly"
                             ( BinOp (BCompar BCne, e1, e2) )
 # 510 "lib/parser.ml"
      : (Lang.expr))
@@ -512,7 +512,7 @@ let _menhir_action_19 =
 let _menhir_action_20 =
   fun e1 e2 ->
     (
-# 94 "lib/parser.mly"
+# 107 "lib/parser.mly"
                             ( BinOp (BCompar BCgt, e1, e2) )
 # 518 "lib/parser.ml"
      : (Lang.expr))
@@ -520,7 +520,7 @@ let _menhir_action_20 =
 let _menhir_action_21 =
   fun e1 e2 ->
     (
-# 95 "lib/parser.mly"
+# 108 "lib/parser.mly"
                             ( BinOp (BCompar BCge, e1, e2) )
 # 526 "lib/parser.ml"
      : (Lang.expr))
@@ -528,7 +528,7 @@ let _menhir_action_21 =
 let _menhir_action_22 =
   fun e1 e2 ->
     (
-# 96 "lib/parser.mly"
+# 109 "lib/parser.mly"
                             ( BinOp (BCompar BClt, e1, e2) )
 # 534 "lib/parser.ml"
      : (Lang.expr))
@@ -536,7 +536,7 @@ let _menhir_action_22 =
 let _menhir_action_23 =
   fun e1 e2 ->
     (
-# 97 "lib/parser.mly"
+# 110 "lib/parser.mly"
                             ( BinOp (BCompar BCle, e1, e2) )
 # 542 "lib/parser.ml"
      : (Lang.expr))
@@ -544,7 +544,7 @@ let _menhir_action_23 =
 let _menhir_action_24 =
   fun e1 e2 ->
     (
-# 98 "lib/parser.mly"
+# 111 "lib/parser.mly"
                               ( BinOp (BLogic BLand, e1, e2) )
 # 550 "lib/parser.ml"
      : (Lang.expr))
@@ -552,7 +552,7 @@ let _menhir_action_24 =
 let _menhir_action_25 =
   fun e1 e2 ->
     (
-# 99 "lib/parser.mly"
+# 112 "lib/parser.mly"
                               ( BinOp (BLogic BLor, e1, e2) )
 # 558 "lib/parser.ml"
      : (Lang.expr))
@@ -560,7 +560,7 @@ let _menhir_action_25 =
 let _menhir_action_26 =
   fun a ->
     (
-# 100 "lib/parser.mly"
+# 113 "lib/parser.mly"
                    ( a )
 # 566 "lib/parser.ml"
      : (Lang.expr))
@@ -692,7 +692,7 @@ let _menhir_action_41 =
 let _menhir_action_42 =
   fun a i ->
     (
-# 104 "lib/parser.mly"
+# 116 "lib/parser.mly"
                                                                         ( DBN (i, a) )
 # 698 "lib/parser.ml"
      : ((string, Lang.attrib_decl list) Graphstruct.db_node))
@@ -700,7 +700,7 @@ let _menhir_action_42 =
 let _menhir_action_43 =
   fun si ->
     (
-# 113 "lib/parser.mly"
+# 124 "lib/parser.mly"
                                                   ( si )
 # 706 "lib/parser.ml"
      : (string))
@@ -708,7 +708,7 @@ let _menhir_action_43 =
 let _menhir_action_44 =
   fun t v ->
     (
-# 58 "lib/parser.mly"
+# 66 "lib/parser.mly"
                                                         ( DeclPattern(v, t) )
 # 714 "lib/parser.ml"
      : (Lang.node_pattern))
@@ -716,7 +716,7 @@ let _menhir_action_44 =
 let _menhir_action_45 =
   fun v ->
     (
-# 59 "lib/parser.mly"
+# 67 "lib/parser.mly"
                                                          ( VarRefPattern(v) )
 # 722 "lib/parser.ml"
      : (Lang.node_pattern))
@@ -724,7 +724,7 @@ let _menhir_action_45 =
 let _menhir_action_46 =
   fun np ->
     (
-# 51 "lib/parser.mly"
+# 57 "lib/parser.mly"
                                                ( SimpPattern np )
 # 730 "lib/parser.ml"
      : (Lang.pattern))
@@ -732,7 +732,7 @@ let _menhir_action_46 =
 let _menhir_action_47 =
   fun lbl np p ->
     (
-# 52 "lib/parser.mly"
+# 58 "lib/parser.mly"
                                                ( CompPattern (np, lbl, p) )
 # 738 "lib/parser.ml"
      : (Lang.pattern))
@@ -740,7 +740,7 @@ let _menhir_action_47 =
 let _menhir_action_48 =
   fun fn vn ->
     (
-# 76 "lib/parser.mly"
+# 88 "lib/parser.mly"
      ( AttribAcc(vn, fn) )
 # 746 "lib/parser.ml"
      : (Lang.expr))
@@ -748,7 +748,7 @@ let _menhir_action_48 =
 let _menhir_action_49 =
   fun c ->
     (
-# 78 "lib/parser.mly"
+# 90 "lib/parser.mly"
      ( Const(BoolV(c)) )
 # 754 "lib/parser.ml"
      : (Lang.expr))
@@ -756,7 +756,7 @@ let _menhir_action_49 =
 let _menhir_action_50 =
   fun c ->
     (
-# 80 "lib/parser.mly"
+# 92 "lib/parser.mly"
      ( Const(IntV(c)) )
 # 762 "lib/parser.ml"
      : (Lang.expr))
@@ -764,7 +764,7 @@ let _menhir_action_50 =
 let _menhir_action_51 =
   fun c ->
     (
-# 82 "lib/parser.mly"
+# 94 "lib/parser.mly"
      ( Const(StringV(c)) )
 # 770 "lib/parser.ml"
      : (Lang.expr))
@@ -772,7 +772,7 @@ let _menhir_action_51 =
 let _menhir_action_52 =
   fun e ->
     (
-# 84 "lib/parser.mly"
+# 96 "lib/parser.mly"
      ( e )
 # 778 "lib/parser.ml"
      : (Lang.expr))
@@ -788,7 +788,7 @@ let _menhir_action_53 =
 let _menhir_action_54 =
   fun cls ->
     (
-# 36 "lib/parser.mly"
+# 39 "lib/parser.mly"
                           ( Query cls )
 # 794 "lib/parser.ml"
      : (Lang.query))
@@ -796,7 +796,7 @@ let _menhir_action_54 =
 let _menhir_action_55 =
   fun rlab si ti ->
     (
-# 119 "lib/parser.mly"
+# 130 "lib/parser.mly"
   ( Graphstruct.DBR (si, rlab, ti) )
 # 802 "lib/parser.ml"
      : ((string, string) Graphstruct.db_rel))
@@ -804,7 +804,7 @@ let _menhir_action_55 =
 let _menhir_action_56 =
   fun l ->
     (
-# 55 "lib/parser.mly"
+# 62 "lib/parser.mly"
                                                         ( l )
 # 810 "lib/parser.ml"
      : (string))
@@ -892,7 +892,7 @@ let _menhir_action_66 =
 let _menhir_action_67 =
   fun e fn vn ->
     (
-# 48 "lib/parser.mly"
+# 53 "lib/parser.mly"
     ( (vn, fn, e) )
 # 898 "lib/parser.ml"
      : (string * string * Lang.expr))
@@ -2634,7 +2634,7 @@ let main =
     let MenhirBox_main v = _menhir_run_000 _menhir_stack _menhir_lexbuf _menhir_lexer in
     v
 
-# 121 "lib/parser.mly"
+# 132 "lib/parser.mly"
   
 
 # 2641 "lib/parser.ml"

@@ -67,14 +67,19 @@
       - Vérification de types
       - Affichage du programme parsé
       - Lancement des tests *)
-   let run_file fn = 
-     let p = run_parser_error_reporting (Some fn) in
-     let np = Instr.normalize_prog p in
-     let _ = Typing.typecheck true np in
-     Printf.printf "\n Parsing + Typage réussi !\n";
-     Printf.printf "%s\n" (Lang.show_prog p);
-     Printf.printf "---------------- TESTS --------------\n";
-     run_tests ()
+  let run_file fn = 
+    let p = run_parser_error_reporting (Some fn) in
+    let np = Typing.typecheck true (Instr.normalize_prog p) in
+    (*let tc_rep = Typing.typecheck true np in*)
+    let State(g, tab, _mn) = Sem.exec np in
+    Printf.printf "%s\n" (Sem.show_db_graph_struct g);
+    Printf.printf "%s\n" (Sem.show_vname_nodeid_table tab);
+    Display.output_table tab;
+    Display.output_graph_struct g;
+
+    Printf.printf "---------------- TESTS --------------\n";
+    
+    run_tests ()
    
    (* Affiche un message d’aide sur comment exécuter le programme *)
    let print_help () =

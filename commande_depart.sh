@@ -28,6 +28,4 @@ dune exec Proj_GraphDB f test/tiny.q
 echo "Construction du projet..."
 dune build
 
-# Lancement de uTop avec Dune
-echo "Lancement de uTop..."
-dune utop
+
